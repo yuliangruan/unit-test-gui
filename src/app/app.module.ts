@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TestComponent } from './comps/test/test.component';
 import { TestSetComponent } from './comps/test-set/test-set.component';
 
+import { ComponentEventsService } from './svcs/component-events.service';
 import { TestService } from './svcs/test.service';
 import { TestSetService } from './svcs/test-set.service';
 
@@ -24,6 +25,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     AngularFontAwesomeModule
   ],
   providers: [
+    ComponentEventsService,
     TestSetService,
   	TestService,
   ],
