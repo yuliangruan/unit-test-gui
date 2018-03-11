@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TestSetService } from './svcs/test-set.service';
-import { TestService } from './svcs/test.service';
+import { ComponentEventsService } from './svcs/component-events.service';
 
 import { TestSet } from './mdls/test-set';
-import { TestResult } from './mdls/test-result';
-import { TestResultStatus } from './mdls/test-result-status.enum';
 
 @Component({
   selector: 'app-root',
@@ -15,20 +12,14 @@ import { TestResultStatus } from './mdls/test-result-status.enum';
 })
 export class AppComponent {
   title = 'Unit Test Runner';
-  testset:TestSet=new TestSet('dummy set');
+  testset:TestSet=new TestSet({identifier:'dummy set',tests:[]});
 
-  constructor(private testsetService:TestSetService, private testService:TestService) {
+  constructor(private componentEventsService:ComponentEventsService) { }
 
-  }
   ngOnInit() {
   	//run test-set service to discover tests
-  	this.testsetService.discover().subscribe(res => {
-		this.testset.addAll(res.tests);
+  	this.componentEventsService.discover(this.testset).subscribe((res:TestSet) => {
+		  this.testset.addAll(res.container);
   	});
-			
-	// var test=new Test({identifier:'sometest'});
-	// var testCtlr = new TestController(test,this.testService);
-	// //testCtlr.run();
-  	 	
   }
 }

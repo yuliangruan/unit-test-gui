@@ -1,0 +1,14 @@
+.title {
+	cursor:pointer;
+}
+
+.status-PASS, .status-FAIL, .status-ERROR {
+	height:29px;  /*this is 1px less than 30px font-awesome icons*/
+}
+
+.status-PASS {
+	background-color: #339933;
+}
+.status-FAIL, .status-ERROR {
+	background-color: #FF3333;
+}

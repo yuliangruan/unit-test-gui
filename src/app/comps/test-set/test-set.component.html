@@ -1,0 +1,15 @@
+<div class='card'>
+	<div class='card-body'>
+		<div class='card-title'>
+			<div class='setname'>
+			  <button (click)="runTestSet()"><fa name="play"></fa></button>
+			  {{testset.identifier}}
+			</div>
+		</div>
+		<div class='card-text tests'>
+			<div *ngFor="let test of testset.container;index as i;">
+			  <app-test [test]=test (onRunTest)="runTest($event)"></app-test>
+			</div>
+		</div>
+	</div>
+</div>
