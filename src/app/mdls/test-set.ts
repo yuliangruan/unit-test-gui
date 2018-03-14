@@ -10,7 +10,7 @@ export class TestSet extends TestContainer {
 		identifier:string,
 		tests: {
 			identifier: string;
-		}[]=[]
+		}[]
 	}) {
 		super();
 		this.identifier=param.identifier;

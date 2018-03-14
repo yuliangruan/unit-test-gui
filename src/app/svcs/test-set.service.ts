@@ -13,7 +13,7 @@ export class TestSetService extends ServiceBase {
   constructor(http:HttpClient) { super(http); }
 
   discover = (set?:TestSet):Observable<any> => {
-  	var obs=new Observable<any>( (observer) {
+  	var obs=new Observable<any>( (observer) => {
 		if (this.production) {
 	  		this._get({
 		  		method:'getSet',

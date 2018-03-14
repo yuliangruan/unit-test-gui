@@ -16,7 +16,7 @@ export class TestService extends ServiceBase {
   constructor(private http?:HttpClient) { super(http); }
 
   run = (testComp:TestComponent):Observable<any> => {
-  	var obs=new Observable<any>( (observer) {
+  	var obs=new Observable<any>( (observer) => {
 	  	if (this.production) {
 	  		this._get({
 		  		method:'runTest',
