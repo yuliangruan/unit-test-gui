@@ -18,7 +18,7 @@ export class TestSetComponent implements OnInit {
   ngOnInit() {
   }
 
-  runTestSet(event) {
+  runTestSet() {
   	this.tests.forEach(test => test.runTest());
   }
 }
