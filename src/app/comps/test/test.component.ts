@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ComponentEventsService } from '../../svcs/component-events.service';
 
 import { Test } from '../../mdls/test';
+import { TestStatus } from '../../mdls/test-status.enum';
 import { TestResult } from '../../mdls/test-result';
 
 @Component({
@@ -13,6 +14,8 @@ import { TestResult } from '../../mdls/test-result';
 })
 export class TestComponent implements OnInit {
   @Input() test:Test;
+  private testStatus=TestStatus;//map so view can use it
+
   constructor(private compeventservice:ComponentEventsService) { }
 
   ngOnInit() {

@@ -8,6 +8,7 @@ import { ServiceBase } from './service-base';
 import { TestComponent } from '../comps/test/test.component';
 
 import { TestResult } from '../mdls/test-result';
+import { TestStatus } from '../mdls/test-status.enum';
 import { TestResultStatus } from '../mdls/test-result-status.enum';
 
 @Injectable()
@@ -16,6 +17,7 @@ export class TestService extends ServiceBase {
   constructor(private http?:HttpClient) { super(http); }
 
   run = (testComp:TestComponent):Observable<any> => {
+  	testComp.test.status=TestStatus.RUNNING;
   	var obs=new Observable<any>( (observer) => {
 	  	if (this.production) {
 	  		this._get({
@@ -35,7 +37,11 @@ export class TestService extends ServiceBase {
 						data:'some data'
 					}  			
 				}).subscribe(res => {
-					observer.next(this.parseResult(res));
+					//simulate real call delay for UI
+					setTimeout(function(observer,self,res){
+						testComp.test.status=TestStatus.READY;
+						observer.next(self.parseResult(res));
+					},150,observer,this,res);
 				})
 				:
 				Observable.of(new Object()).mapTo({
@@ -47,7 +53,11 @@ export class TestService extends ServiceBase {
 						data:'some data'
 					}  			
 				}).subscribe(res => {
-					observer.next(this.parseResult(res));
+					//simulate real call delay for UI
+					setTimeout(function(observer,self,res){
+						testComp.test.status=TestStatus.READY;
+						observer.next(self.parseResult(res));
+					},0,observer,this,res);
 				})
 
 		}

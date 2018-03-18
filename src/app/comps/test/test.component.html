@@ -1,14 +1,20 @@
 <div class='row'>
-	<div class='col-lg-2 title' (click)='runTest()'>
+	<div class='col-lg-2 title' [hidden]='!(test.status==testStatus.RUNNING)'>
+		<button><i class='fa fa-hourglass'></i></button>
+		{{test.identifier}}
+	</div>
+	<div class='col-lg-2 title' (click)='runTest()' [hidden]='test.status==testStatus.RUNNING'>
 		<button><fa name="play"></fa></button>
 		{{test.identifier}}
 	</div>
 	<div class='col-lg-10'>
-		<div class='row' *ngFor="let result of test.results">
-			<div class='status status-{{result.status}} col-lg-2'>{{result.status}}</div>
-			<div class='error col-lg-4'>{{result.error}}</div>
-			<div class='message col-lg-4'>{{result.message}}</div>
-			<div class='data col-lg-2'>{{result.data}}</div>
+		<div *ngFor="let result of test.results.reverse(); let i=index">
+			<div class='row' [hidden]='i > 0'>
+				<div class='status status-{{result.status}} col-lg-2'>{{result.status}}</div>
+				<div class='error col-lg-4'>{{result.error}}</div>
+				<div class='message col-lg-4'>{{result.message}}</div>
+				<div class='data col-lg-2'>{{result.data}}</div>
+			</div>
 		</div>
 	</div>
 </div>

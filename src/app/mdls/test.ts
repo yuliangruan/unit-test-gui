@@ -1,9 +1,11 @@
 import { TestResult } from './test-result';
+import { TestStatus } from './test-status.enum';
 import { TestResultStatus } from './test-result-status.enum';
 
 export class Test {
 	identifier:string;
 	desc:string='desc';
+	status: TestStatus=TestStatus.READY;
 	results:TestResult[]=[];
 
 	constructor(param:{
