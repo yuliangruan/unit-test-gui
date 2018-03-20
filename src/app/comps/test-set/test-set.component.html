@@ -1,18 +1,29 @@
 <div class='card'>
 	<div class='card-body'>
 		<div class='card-title row'>
-			<div class='setname col-lg-1'>
-			  <button (click)="runTestSet()"><fa name="play"></fa></button>
+			<div class='setname col-lg-1' (click)="runTestSet()">
+			  <button><fa name="play"></fa></button>
 			  {{testset.identifier}}
 			</div>
-			<div class='col-lg-1'>
+			<div class='col-lg-1 text-center'>
 				# tests: {{testset.container.length}} 
 			</div>
-
+			<div class='col-lg-1 text-center'>
+				{{testset.counts.RUNNING}} running
+			</div>
+			<div class='col-lg-1 text-center pass' title='Pass'>
+				{{testset.counts.PASS}}
+			</div>
+			<div class='col-lg-1 text-center fail' title='Fail' [hidden]='testset.counts.FAIL==0'>
+				{{(testset.counts.FAIL>0)?testset.counts.FAIL:''}}
+			</div>
+			<div class='col-lg-1 text-center error' title='Error' [hidden]='testset.counts.ERROR==0'>
+				{{testset.counts.ERROR}}
+			</div>
 		</div>
 		<div class='card-text tests'>
 			<div *ngFor="let test of testset.container">
-			  <app-test [test]=test (onRunTest)="runTest($event)"></app-test>
+			  <app-test [test]=test (onTestRun)="onTestRun($event)"></app-test>
 			</div>
 		</div>
 	</div>

@@ -20,7 +20,7 @@ describe('TestComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    component.test=new Test('mocktest');
+    component.test=new Test({identifier:'mocktest'});
   });
 
   it('should create', () => {

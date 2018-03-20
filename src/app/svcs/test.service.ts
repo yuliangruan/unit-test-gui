@@ -5,8 +5,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { ServiceBase } from './service-base';
 
-import { TestComponent } from '../comps/test/test.component';
-
+import { Test } from '../mdls/test';
 import { TestResult } from '../mdls/test-result';
 import { TestStatus } from '../mdls/test-status.enum';
 import { TestResultStatus } from '../mdls/test-result-status.enum';
@@ -16,20 +15,19 @@ export class TestService extends ServiceBase {
 
   constructor(private http?:HttpClient) { super(http); }
 
-  run = (testComp:TestComponent):Observable<any> => {
-  	testComp.test.status=TestStatus.RUNNING;
+  run = (test:Test):Observable<any> => {
   	var obs=new Observable<any>( (observer) => {
 	  	if (this.production) {
 	  		this._get({
 		  		method:'runTest',
-		  		identifier:testComp.test.identifier
+		  		identifier:test.identifier
 		  	}).subscribe(res => {
 				observer.next(this.parseResult(res));
 		  	});
 		} else {
 			(Math.floor(Math.random()*2))?
 				Observable.of(new Object()).mapTo({
-					identifier:testComp.test.identifier,
+					identifier:test.identifier,
 					result: {
 						status: 'Pass',
 						error: '',
@@ -39,7 +37,6 @@ export class TestService extends ServiceBase {
 				}).subscribe(res => {
 					//simulate real call delay for UI
 					setTimeout(function(observer,self,res){
-						testComp.test.status=TestStatus.READY;
 						observer.next(self.parseResult(res));
 					},150,observer,this,res);
 				})
@@ -55,7 +52,6 @@ export class TestService extends ServiceBase {
 				}).subscribe(res => {
 					//simulate real call delay for UI
 					setTimeout(function(observer,self,res){
-						testComp.test.status=TestStatus.READY;
 						observer.next(self.parseResult(res));
 					},0,observer,this,res);
 				})
@@ -68,10 +64,10 @@ export class TestService extends ServiceBase {
   parseResult = (res):TestResult => {
 		let status:TestResultStatus;
 
-  		switch (res.result.status) {
-  			case 'Pass' : { status=TestResultStatus.Pass; break; }
-  			case 'Fail' : { status=TestResultStatus.Fail; break; }
-  			case 'Error' : { status=TestResultStatus.Error; break; }
+  		switch (res.result.status.toUpperCase()) {
+  			case 'PASS' : { status=TestResultStatus.PASS; break; }
+  			case 'FAIL' : { status=TestResultStatus.FAIL; break; }
+  			case 'ERROR' : { status=TestResultStatus.ERROR; break; }
   		}
 	return new TestResult({
 			status:status,

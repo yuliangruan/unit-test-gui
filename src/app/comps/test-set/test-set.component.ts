@@ -11,7 +11,6 @@ import { TestComponent } from '../test/test.component';
 })
 export class TestSetComponent implements OnInit {
   @Input() testset:TestSet;
-  @Output() onRunTestSet:EventEmitter<any> = new EventEmitter<any>();
   @ViewChildren(TestComponent) tests: QueryList<TestComponent>;
   constructor() { }
 
@@ -20,5 +19,15 @@ export class TestSetComponent implements OnInit {
 
   runTestSet() {
   	this.tests.forEach(test => test.runTest());
+  }
+
+  /**
+   * one of the container's tests ran.  recount the status
+   *
+   * @param      {Event}  event   The event
+   * @return     {void}  { no return }
+   */
+  onTestRun(event) {
+    this.testset.recount();
   }
 }

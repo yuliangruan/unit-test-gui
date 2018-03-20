@@ -1,4 +1,4 @@
 export enum TestStatus {
-	'READY'
-	'RUNNING',
+	READY='READY',
+	RUNNING='RUNNING'
 }

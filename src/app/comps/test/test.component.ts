@@ -14,7 +14,9 @@ import { TestResult } from '../../mdls/test-result';
 })
 export class TestComponent implements OnInit {
   @Input() test:Test;
-  private testStatus=TestStatus;//map so view can use it
+  @Output() onTestRun:EventEmitter<any> = new EventEmitter<any>();
+
+  testStatus=TestStatus;//map so view can use it
 
   constructor(private compeventservice:ComponentEventsService) { }
 
@@ -22,8 +24,12 @@ export class TestComponent implements OnInit {
   }
 
   runTest() {
-  	this.compeventservice.runTest(this).subscribe( (res:TestResult) => {
+    this.test.status=TestStatus.RUNNING;
+    this.onTestRun.emit(this.test);
+  	this.compeventservice.runTest(this.test).subscribe( (res:TestResult) => {
       this.test.addResult(res);
+      this.test.status=TestStatus.READY;
+      this.onTestRun.emit(this.test);
     });
   }
 }

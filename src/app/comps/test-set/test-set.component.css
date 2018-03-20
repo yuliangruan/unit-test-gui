@@ -1,3 +1,14 @@
+.setname {
+	cursor:pointer;
+}
+
 .tests {
 	padding-left:40px;
+}
+
+.pass {
+	background-color: #339933;
+}
+.fail, .error {
+	background-color: #FF3333;
 }
